@@ -11,7 +11,6 @@ class ItemControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formVisibleOnPage: false,
       selectedItem: null,
       editing: false
     };
@@ -20,14 +19,15 @@ class ItemControl extends React.Component {
   handleClick = () => {
     if (this.state.selectedItem !== null) {
       this.setState({
-        formVisibleOnPage: false,
         selectedItem: null,
         editing: false
       });
     } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage
-      }));
+      const { dispatch } = this.props;
+      const action = {
+        type: 'TOGGLE_FORM'
+      }
+      dispatch(action);
     }
   }
 
@@ -107,7 +107,10 @@ class ItemControl extends React.Component {
       quantity: quantity
     }
     dispatch(action);
-    this.setState({formVisibleOnPage: false}); 
+    const actionTwo = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(actionTwo);
   }
 
   render(){
@@ -133,7 +136,7 @@ class ItemControl extends React.Component {
         onClickingDelete = {this.handleDeletingItem}
         onClickingEdit = {this.handleEditClick} />
       buttonText = "return to items";
-    } else if (this.state.formVisibleOnPage) {
+    } else if (this.props.formVisibleOnPage) {
       currentlyVisibleState = <NewItemForm 
         onNewItemCreation={this.handleAddingNewItemToList}/>
       buttonText = "return to items";
@@ -167,7 +170,8 @@ ItemControl.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    masterItemList: state
+    masterItemList: state.masterItemList,
+    formVisibleOnPage: state.formVisibleOnPage
   }
 }
 

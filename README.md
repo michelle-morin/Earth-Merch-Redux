@@ -1,7 +1,7 @@
 # Earth Day Merch
 
 ### A website for selling Earth Day merchandise. Rafactored to use Redux 
-#### By: Michelle Morin, Jamison Cozart, April 27, 2020
+#### By: Michelle Morin, Jamison Cozart, Geoff Goetz, April 27, 2020
 
 ## Description
 
@@ -66,4 +66,4 @@ _Open the contents of the directory in a text editor or IDE of your choice (e.g.
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-Copyright (c) 2020 **_Michelle Morin, Jamison Cozart_** 
+Copyright (c) 2020 **_Michelle Morin, Jamison Cozart, Geoff Goetz_** 
