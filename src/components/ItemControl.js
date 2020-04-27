@@ -11,17 +11,13 @@ class ItemControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedItem: null,
-      editing: false
+      selectedItem: null
     };
   }
 
   handleClick = () => {
     if (this.state.selectedItem !== null) {
-      this.setState({
-        selectedItem: null,
-        editing: false
-      });
+      this.setState({selectedItem: null});
     } else {
       const { dispatch } = this.props;
       const action = {
@@ -33,7 +29,11 @@ class ItemControl extends React.Component {
 
   handleEditClick = () => {
     console.log("handleEditClick reached!");
-    this.setState({editing: true});
+    const { dispatch } = this.props;
+    const action = {
+      type: 'TOGGLE_EDIT'
+    }
+    dispatch(action);
   }
 
   handleEditingItemInList = (itemToEdit) => {
@@ -47,10 +47,11 @@ class ItemControl extends React.Component {
       quantity: quantity
     }
     dispatch(action);
-    this.setState({
-      editing: false,
-      selectedItem: null
-    });
+    const actionTwo = {
+      type: 'TOGGLE_EDIT'
+    }
+    dispatch(actionTwo);
+    this.setState({selectedItem: null});
   }
 
   handleItemPurchase = (id) => {
@@ -124,8 +125,9 @@ class ItemControl extends React.Component {
 
     let currentlyVisibleState = null;
     let buttonText = null;
-    
-    if (this.state.editing) {
+    console.log(this.props.editing);
+    if (this.props.editing) {
+      console.log("in editing render");
       currentlyVisibleState = <EditItemForm 
         item = {this.state.selectedItem}
         onEditItem = {this.handleEditingItemInList} />
@@ -171,7 +173,8 @@ ItemControl.propTypes = {
 const mapStateToProps = state => {
   return {
     masterItemList: state.masterItemList,
-    formVisibleOnPage: state.formVisibleOnPage
+    formVisibleOnPage: state.formVisibleOnPage,
+    editing: state.editing
   }
 }
 
