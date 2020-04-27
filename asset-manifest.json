@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Earth-Merch-Redux/static/css/main.f7df75fc.chunk.css",
+    "main.js": "/Earth-Merch-Redux/static/js/main.93fde543.chunk.js",
+    "main.js.map": "/Earth-Merch-Redux/static/js/main.93fde543.chunk.js.map",
+    "runtime-main.js": "/Earth-Merch-Redux/static/js/runtime-main.6bfd3b9c.js",
+    "runtime-main.js.map": "/Earth-Merch-Redux/static/js/runtime-main.6bfd3b9c.js.map",
+    "static/js/2.6f0caf2c.chunk.js": "/Earth-Merch-Redux/static/js/2.6f0caf2c.chunk.js",
+    "static/js/2.6f0caf2c.chunk.js.map": "/Earth-Merch-Redux/static/js/2.6f0caf2c.chunk.js.map",
+    "index.html": "/Earth-Merch-Redux/index.html",
+    "precache-manifest.7e81ea0cf761ce32b83165844f8173a9.js": "/Earth-Merch-Redux/precache-manifest.7e81ea0cf761ce32b83165844f8173a9.js",
+    "service-worker.js": "/Earth-Merch-Redux/service-worker.js",
+    "static/css/main.f7df75fc.chunk.css.map": "/Earth-Merch-Redux/static/css/main.f7df75fc.chunk.css.map",
+    "static/js/2.6f0caf2c.chunk.js.LICENSE.txt": "/Earth-Merch-Redux/static/js/2.6f0caf2c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6bfd3b9c.js",
+    "static/js/2.6f0caf2c.chunk.js",
+    "static/css/main.f7df75fc.chunk.css",
+    "static/js/main.93fde543.chunk.js"
+  ]
+}
