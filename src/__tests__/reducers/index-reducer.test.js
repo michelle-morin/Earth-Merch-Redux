@@ -2,6 +2,7 @@ import rootReducer from '../../reducers/index';
 import { createStore } from 'redux';
 import formVisibleReducer from '../../reducers/form-visible-reducer';
 import itemListReducer from '../../reducers/item-list-reducer';
+import editingVisibleReducer from '../../reducers/editing-visible-reducer';
 
 let store = createStore(rootReducer);
 
@@ -9,7 +10,8 @@ describe("rootReducer", () => {
   test('Should return default state if no action type is recognized', () => {
     expect(rootReducer({}, { type: null })).toEqual({
       masterItemList: {},
-      formVisibleOnPage: false
+      formVisibleOnPage: false,
+      editing: false
     });
   });
 
@@ -21,7 +23,11 @@ describe("rootReducer", () => {
     expect(store.getState().formVisibleOnPage).toEqual(formVisibleReducer(undefined, { type: null }));
   });
 
-  test('check that initial state of itemListReducer matches root reducer', ()=> {
+  test('that initial state of editingVisibleReducer', ()=> {
+    expect(store.getState().editing).toEqual(editingVisibleReducer(undefined, { type: null }));
+  });
+
+  test('check that itemListReducer matches root reducer', ()=> {
     const action = {
       type: 'ADD_ITEM',
       name: 't-shirt',
@@ -33,11 +39,19 @@ describe("rootReducer", () => {
     expect(store.getState().masterItemList).toEqual(itemListReducer(undefined, action));
   });
 
-  test('check that initial state of formVisibleReducer matches root reducer', ()=> {
+  test('check that formVisibleReducer matches root reducer', ()=> {
     const action = {
       type: 'TOGGLE_FORM'
     }
     store.dispatch(action);
     expect(store.getState().formVisibleOnPage).toEqual(formVisibleReducer(undefined, action));
+  });
+
+  test('check that editingVisibleReducer matches root reducer', () => {
+    const action = {
+      type: 'TOGGLE_EDIT'
+    }
+    store.dispatch(action);
+    expect(store.getState().editing).toEqual(editingVisibleReducer(undefined, action));
   });
 });
