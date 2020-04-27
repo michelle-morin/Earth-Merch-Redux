@@ -6,11 +6,15 @@ import EditItemForm from './EditItemForm';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const ItemControl = props => {
+function ItemControl(props) {
 
-  handleClick = () => {
-    if (this.state.selectedItem !== null) {
-      this.setState({selectedItem: null});
+  const handleClick = () => {
+    if (props.selectedItem !== null) {   
+      const { dispatch } = props;
+      const action = {
+        type: 'CHANGE_TO_NULL'
+      }   
+      dispatch(action);
     } else {
       const { dispatch } = props;
       const action = {
@@ -20,17 +24,17 @@ const ItemControl = props => {
     }
   }
 
-  handleEditClick = () => {
+  const handleEditClick = () => {
     console.log("handleEditClick reached!");
-    const { dispatch } = this.props;
+    const { dispatch } = props;
     const action = {
       type: 'TOGGLE_EDIT'
     }
     dispatch(action);
   }
 
-  handleEditingItemInList = (itemToEdit) => {
-    const { dispatch } = this.props;
+  const handleEditingItemInList = (itemToEdit) => {
+    const { dispatch } = props;
     const { name, description, quantity, id } = itemToEdit;
     const action = {
       type: 'ADD_ITEM',
@@ -44,12 +48,15 @@ const ItemControl = props => {
       type: 'TOGGLE_EDIT'
     }
     dispatch(actionTwo);
-    this.setState({selectedItem: null});
+    const actionThree = {
+      type: 'CHANGE_TO_NULL'
+    }
+    dispatch(actionThree);
   }
 
-  handleItemPurchase = (id) => {
-    const { dispatch } = this.props;
-    const currentlySelectedItem = Object.values(this.props.masterItemList).filter(item => item.id === id)[0];
+  const handleItemPurchase = (id) => {
+    const { dispatch } = props;
+    const currentlySelectedItem = Object.values(props.masterItemList).filter(item => item.id === id)[0];
     const action = {
       type: 'ADD_ITEM',
       id: id,
@@ -60,9 +67,9 @@ const ItemControl = props => {
     dispatch(action);
   }
 
-  handleItemRestock = (id) => {
-    const { dispatch } = this.props;
-    const currentlySelectedItem = Object.values(this.props.masterItemList).filter(item => item.id === id)[0];
+  const handleItemRestock = (id) => {
+    const { dispatch } = props;
+    const currentlySelectedItem = Object.values(props.masterItemList).filter(item => item.id === id)[0];
     const action = {
       type: 'ADD_ITEM',
       id: id,
@@ -73,23 +80,34 @@ const ItemControl = props => {
     dispatch(action);
   }
 
-  handleDeletingItem = (id) => {
-    const { dispatch } = this.props;
+  const handleDeletingItem = (id) => {
+    const { dispatch } = props;
     const action = {
       type: 'DELETE_ITEM',
       id: id
     }
     dispatch(action);
-    this.setState({selectedItem: null}); // change
+    const actionTwo = {
+      type: 'CHANGE_TO_NULL'
+    }
+    dispatch(actionTwo);
   }
 
-  handleChangingSelectedItem = (id) => {
-    const selectedItem = this.props.masterItemList[id];
-    this.setState({selectedItem: selectedItem}); // change
+  const handleChangingSelectedItem = (id) => {
+    const selectedItem = props.masterItemList[id];
+    const { dispatch } = props;
+    const action = {
+      type: 'CHANGE_SELECTED',
+      name: selectedItem.name,
+      id: selectedItem.id,
+      description: selectedItem.description,
+      quantity: selectedItem.quantity
+    }
+    dispatch(action);
   }
 
-  handleAddingNewItemToList = (newItem) => {
-    const { dispatch } = this.props;
+  const handleAddingNewItemToList = (newItem) => {
+    const { dispatch } = props;
     const { id, name, description, quantity } = newItem;
     const action = {
       type: 'ADD_ITEM',
@@ -105,56 +123,53 @@ const ItemControl = props => {
     dispatch(actionTwo);
   }
 
-  render(){
-
-    const itemControlStyles = {
-      position: 'relative',
-      top: '30vh',
-      margin: '2%',
-      overflowY: 'auto'
-    }
-
-    let currentlyVisibleState = null;
-    let buttonText = null;
-    console.log(this.props.editing);
-    if (this.props.editing) {
-      console.log("in editing render");
-      currentlyVisibleState = <EditItemForm 
-        item = {this.state.selectedItem}
-        onEditItem = {this.handleEditingItemInList} />
-      buttonText = "return to items";
-    } else if (this.state.selectedItem != null) {
-      currentlyVisibleState = <ItemDetail 
-        item = {this.state.selectedItem} 
-        onClickingDelete = {this.handleDeletingItem}
-        onClickingEdit = {this.handleEditClick} />
-      buttonText = "return to items";
-    } else if (this.props.formVisibleOnPage) {
-      currentlyVisibleState = <NewItemForm 
-        onNewItemCreation={this.handleAddingNewItemToList}/>
-      buttonText = "return to items";
-    } else {
-      currentlyVisibleState = <ItemList 
-        itemList={this.props.masterItemList} 
-        onItemSelection={this.handleChangingSelectedItem}
-        onClickingBuy={this.handleItemPurchase}
-        onClickingRestock={this.handleItemRestock} />
-      buttonText = "+";
-    }
-
-    return (
-      <React.Fragment>
-        <div style={itemControlStyles}>
-          <div className="adjustableButton">
-            <button onClick={this.handleClick}>{buttonText}</button>
-          </div>
-          <div className="storeFront">
-            {currentlyVisibleState}
-          </div>
-        </div>
-      </React.Fragment>
-    );
+  const itemControlStyles = {
+    position: 'relative',
+    top: '30vh',
+    margin: '2%',
+    overflowY: 'auto'
   }
+
+  let currentlyVisibleState = null;
+  let buttonText = null;
+  console.log(props.editing);
+  if (props.editing) {
+    console.log("in editing render");
+    currentlyVisibleState = <EditItemForm 
+      item = {props.selectedItem}
+      onEditItem = {handleEditingItemInList} />
+    buttonText = "return to items";
+  } else if (props.selectedItem != null) {
+    currentlyVisibleState = <ItemDetail 
+      item = {props.selectedItem} 
+      onClickingDelete = {handleDeletingItem}
+      onClickingEdit = {handleEditClick} />
+    buttonText = "return to items";
+  } else if (props.formVisibleOnPage) {
+    currentlyVisibleState = <NewItemForm 
+      onNewItemCreation={handleAddingNewItemToList}/>
+    buttonText = "return to items";
+  } else {
+    currentlyVisibleState = <ItemList 
+      itemList={props.masterItemList} 
+      onItemSelection={handleChangingSelectedItem}
+      onClickingBuy={handleItemPurchase}
+      onClickingRestock={handleItemRestock} />
+    buttonText = "+";
+  }
+
+  return (
+    <React.Fragment>
+      <div style={itemControlStyles}>
+        <div className="adjustableButton">
+          <button onClick={handleClick}>{buttonText}</button>
+        </div>
+        <div className="storeFront">
+          {currentlyVisibleState}
+        </div>
+      </div>
+    </React.Fragment>
+  );
 }
 
 ItemControl.propTypes = {

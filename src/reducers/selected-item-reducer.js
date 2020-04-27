@@ -9,6 +9,9 @@ export default (state = null, action) => {
         id: id
       };
       return newState;
+    case 'CHANGE_TO_NULL':
+      const nullState = null;
+      return nullState;
   default:
     return state;
   }
