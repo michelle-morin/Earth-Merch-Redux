@@ -40,7 +40,7 @@ class ItemControl extends React.Component {
     const { dispatch } = this.props;
     const { name, description, quantity, id } = itemToEdit;
     const action = {
-      type: 'ADD_TICKET',
+      type: 'ADD_ITEM',
       id: id,
       name: name,
       description: description,
@@ -54,25 +54,31 @@ class ItemControl extends React.Component {
   }
 
   handleItemPurchase = (id) => {
-    const currentlySelectedItem = this.state.masterItemList.filter(item => item.id === id)[0];
-    const newQuantityOfItem = currentlySelectedItem.quantity - 1;
-    const updatedItem = {...currentlySelectedItem, quantity: newQuantityOfItem};
-    const previousItemList = this.state.masterItemList.filter(item => item.id !== id);
-    this.setState({
-      masterItemList: [...previousItemList, updatedItem],
-      selectedItem: null
-    });
+    const { dispatch } = this.props;
+    const currentlySelectedItem = Object.values(this.props.masterItemList).filter(item => item.id === id)[0];
+    const action = {
+      type: 'ADD_ITEM',
+      id: id,
+      quantity: currentlySelectedItem.quantity - 1,
+      name: currentlySelectedItem.name,
+      description: currentlySelectedItem.description
+    }
+    dispatch(action);
+    this.setState({selectedItem: null});
   }
 
   handleItemRestock = (id) => {
-    const currentlySelectedItem = this.state.masterItemList.filter(item => item.id === id)[0];
-    const newQuantityOfItem = parseInt(currentlySelectedItem.quantity) + 10;
-    const updatedItem = {...currentlySelectedItem, quantity: newQuantityOfItem};
-    const previousItemList = this.state.masterItemList.filter(item => item.id !== id);
-    this.setState({
-      masterItemList: [...previousItemList, updatedItem],
-      selectedItem: null
-    });
+    const { dispatch } = this.props;
+    const currentlySelectedItem = Object.values(this.props.masterItemList).filter(item => item.id === id)[0];
+    const action = {
+      type: 'ADD_ITEM',
+      id: id,
+      name: currentlySelectedItem.name,
+      description: currentlySelectedItem.description,
+      quantity: parseInt(currentlySelectedItem.quantity) + 10
+    }
+    dispatch(action);
+    this.setState({selectedItem: null});
   }
 
   handleDeletingItem = (id) => {
