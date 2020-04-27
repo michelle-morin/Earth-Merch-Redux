@@ -17,7 +17,7 @@ function Footer(){
   return(
     <React.Fragment>
     <div style={footerStyles}>
-      <h3>Earth<span class="merchFooter">Merch</span></h3>
+      <h3>Earth<span className="merchFooter">Merch</span></h3>
       <h4>&copy; Michelle Morin, Jamison Cozart</h4>
     </div>
     </React.Fragment>
