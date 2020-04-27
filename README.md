@@ -1,7 +1,7 @@
 # Earth Day Merch
 
-### A website for selling Earth Day merchandise. April 22-23, 2020
-#### By: Benjamin Thom, Michelle Morin, Brandan Sayarath
+### A website for selling Earth Day merchandise. Rafactored to use Redux 
+#### By: Michelle Morin, Jamison Cozart, April 27, 2020
 
 ## Description
 
@@ -60,9 +60,10 @@ _Open the contents of the directory in a text editor or IDE of your choice (e.g.
 * npm
 * Webpack
 * React
+* Redux
 
 ### License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-Copyright (c) 2020 **_Michelle Morin, Benjamin Thom, Brandan Sayarath_** 
+Copyright (c) 2020 **_Michelle Morin, Jamison Cozart_** 
