@@ -6,20 +6,13 @@ import EditItemForm from './EditItemForm';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-class ItemControl extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedItem: null
-    };
-  }
+const ItemControl = props => {
 
   handleClick = () => {
     if (this.state.selectedItem !== null) {
       this.setState({selectedItem: null});
     } else {
-      const { dispatch } = this.props;
+      const { dispatch } = props;
       const action = {
         type: 'TOGGLE_FORM'
       }
@@ -65,7 +58,6 @@ class ItemControl extends React.Component {
       description: currentlySelectedItem.description
     }
     dispatch(action);
-    this.setState({selectedItem: null});
   }
 
   handleItemRestock = (id) => {
@@ -79,7 +71,6 @@ class ItemControl extends React.Component {
       quantity: parseInt(currentlySelectedItem.quantity) + 10
     }
     dispatch(action);
-    this.setState({selectedItem: null});
   }
 
   handleDeletingItem = (id) => {
@@ -89,12 +80,12 @@ class ItemControl extends React.Component {
       id: id
     }
     dispatch(action);
-    this.setState({selectedItem: null});
+    this.setState({selectedItem: null}); // change
   }
 
   handleChangingSelectedItem = (id) => {
     const selectedItem = this.props.masterItemList[id];
-    this.setState({selectedItem: selectedItem}); 
+    this.setState({selectedItem: selectedItem}); // change
   }
 
   handleAddingNewItemToList = (newItem) => {
@@ -174,7 +165,8 @@ const mapStateToProps = state => {
   return {
     masterItemList: state.masterItemList,
     formVisibleOnPage: state.formVisibleOnPage,
-    editing: state.editing
+    editing: state.editing,
+    selectedItem: state.selectedItem
   }
 }
 
